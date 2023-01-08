@@ -1,16 +1,17 @@
 {
-  "name": "telegram-bot-fighting_club",
+  "name": "telegram-bot",
   "version": "1.0.0",
-  "description": "Fighting club tg bot",
+  "description": "",
   "main": "script.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon script.js",
+    "start": "node script.js"
   },
-  "author": "Alexander Menshikoff",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.3",
-    "node-telegram-bot-api": "^0.61.0",
+    "node-telegram-bot-api": "^0.60.0",
     "nodemon": "^2.0.20"
   }
 }
