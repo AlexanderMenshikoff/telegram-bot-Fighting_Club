@@ -6,16 +6,16 @@ const {rules, quotes, interestingFacts, randomPic, theories, characters, botInfo
 const start = () =>{
     bot.setMyCommands([
         {command:'/rules', description:'Правила бойцовского клуба'},
-        {command:'/quotes', description:'Цитаты'},
-        {command:'/interesting_facts', description:'Интересные факты'},
-        {command:'/theories', description:'Теории о фильме'},
-        {command:'/random_pics', description:'Рандомное изображение'},
-        {command:'/fighting_club_game', description:'Кто ты из бойцовского клуба?'},
-        {command:'/characters', description:'Персонажи'},
-        {command:'/info', description:'Информация о боте'}
-        
-
-    ])
+        {command:'/quote', description:'Цитаты'},
+        {command:'/interesting_fact', description:'Интересные факты'},
+        {command:'/theory', description:'Теории о фильме'},
+        {command:'/random_pic', description:'Рандомное изображение'},
+        {command:'/fight_club_game', description:'Как хорошо ты знаешь "Бойцовский клуб?'},
+        {command:'/character', description:'Персонажи'},
+        {command:'/info', description:'Информация о боте'},
+        {command:'/remove_buttons', description:'Убрать кнопки'},
+        {command:'/buttons_back', description:'Вернуть кнопки'}    
+   ])
 
     bot.on('message', async msg => {
         const text = msg.text
@@ -25,7 +25,7 @@ const start = () =>{
             await bot.sendMessage(chatId, `${msg.from.first_name} ${msg.from.last_name}, добро пожаловать в клуб.`)
         }
 
-        if(text === '/quotes' || text === 'Цитата' ){
+        if(text === '/quote' || text === 'Цитата' ){
             return bot.sendMessage(chatId, quotes[getRandomNumber(0, quotes.length - 1)]) 
         }
 
@@ -33,27 +33,29 @@ const start = () =>{
             return bot.sendMessage(chatId, rules[0])
         }
 
-        if(text === '/interesting_facts' || text === 'Интересный факт'){
-            await bot.sendMessage(chatId, interestingFacts[getRandomNumber(0, interestingFacts.length - 1)])
+        if(text === '/interesting_fact' || text === 'Интересный факт'){
+            return bot.sendMessage(chatId, interestingFacts[getRandomNumber(0, interestingFacts.length - 1)])
         }
 
-        if(text === '/random_pics' || text === 'Рандомное изображение'){
-            await bot.sendMessage(chatId, randomPic[getRandomNumber(0, randomPic.length - 1)])
+        if(text === '/random_pic' || text === 'Рандомное изображение'){
+            return bot.sendMessage(chatId, randomPic[getRandomNumber(0, randomPic.length - 1)])
         }
 
-        if(text === '/theories' || text === 'Теория'){
+        if(text === '/theory' || text === 'Теория'){
             return bot.sendMessage(chatId, theories[getRandomNumber(0, theories.length - 1)])
         }
 
-        if(text === '/characters' || text === 'Персонажи'){
+        if(text === '/character' || text === 'Персонаж'){
             return bot.sendMessage(chatId, characters[eachElement()])
-            
-        }
-        if(text === '/info' || text === 'Информация о боте'){
-            return bot.sendMessage(chatId, botInfo[0])
         }
 
-        return bot.sendMessage(chatId, 'Я тебя не понимаю. Смотри /info.') 
+        if(text === '/info' || text === 'Информация о боте'){
+            return bot.sendMessage(chatId, botInfo[0])
+        }     
+
+        if(text === '/fight_club_game' || text === 'Как хорошо ты знаешь "Бойцовский клуб"?'){
+            return bot.sendMessage(chatId, 't.me/QuizBot?start=ULizFbt4')
+        }
     })
 
 
@@ -61,12 +63,43 @@ const start = () =>{
         const chatId = msg.chat.id
         return bot.sendSticker(chatId,'https://stickerpacks.ru/wp-content/uploads/2022/09/nabor-stikerov-po-bojcovskomu-klubu-5-32.webp',{
             'reply_markup':{
-                'keyboard':[['Правила бойцовского клуба'],['Цитата','Интересный факт'], ['Рандомное изображение','Теория'],['Персонажи', 'Информация о боте'], ['Кто ты из Бойцовского клуба?(в разработке)']]
+                'keyboard':[['Правила бойцовского клуба'],['Цитата','Интересный факт'], ['Рандомное изображение','Теория'],['Персонаж', 'Информация о боте'], ['Как хорошо ты знаешь "Бойцовский клуб"?']]
             }
         })
     })
-   
+
+    bot.onText(/\/remove_buttons/, (msg) => {
+        const chatId = msg.chat.id
+        return bot.sendMessage(chatId,'Кнопки убраны, также вы можете воспользоваться кнопкой menu (в пк версии телеграма кнопка menu может не отражаться, если она исчезла, напишите / - кнопка должна отобразиться), чтобы вернуть кнопки введите /buttons_back',{
+            'reply_markup':{
+                'remove_keyboard':true
+            }
+        })
+    })
+
+    bot.setMyCommands([
+        {command:'/rules', description:'Правила бойцовского клуба'},
+        {command:'/quote', description:'Цитаты'},
+        {command:'/interesting_fact', description:'Интересные факты'},
+        {command:'/theory', description:'Теории о фильме'},
+        {command:'/random_pic', description:'Рандомное изображение'},
+        {command:'/fight_club_game', description:'Как хорошо ты знаешь "Бойцовский клуб?'},
+        {command:'/character', description:'Персонажи'},
+        {command:'/info', description:'Информация о боте'},
+        {command:'/remove_buttons', description:'Убрать кнопки'},
+        {command:'/buttons_back', description:'Вернуть кнопки'}    
+   ])
+
+    bot.onText(/\/buttons_back/, (msg) => {
+        const chatId = msg.chat.id
+        return bot.sendMessage(chatId,'Кнопки возвращены, чтобы убрать кнопки введите /remove_buttons',{
+            'reply_markup':{
+                'keyboard':[['Правила бойцовского клуба'],['Цитата','Интересный факт'], ['Рандомное изображение','Теория'],['Персонаж', 'Информация о боте'], ['Как хорошо ты знаешь "Бойцовский клуб"?']]
+            }
+        })
+    })
 }
+
 
 function getRandomNumber(min, max) {
     min = Math.ceil(min);
@@ -82,10 +115,9 @@ function getRandomNumber(min, max) {
 
  let eachElement = getCharactersEachElementArr()
   
-
-
-
 start()
+
+
 
 
 
